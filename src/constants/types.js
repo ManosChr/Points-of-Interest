@@ -1,0 +1,1 @@
+export const GET_POIS_LIST = 'GET_POIS_LIST';

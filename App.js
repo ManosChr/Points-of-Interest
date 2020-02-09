@@ -20,12 +20,7 @@
 //   }
 // });
 
-import * as React from 'react';
-import { Button, View, Text } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import HomeScreen from './src/screens/HomeScreen';
-import PoisScreen from './src/screens/PoisScreen';
+
 
 // function HomeScreen({ navigation }) {
 //   return (
@@ -47,16 +42,29 @@ import PoisScreen from './src/screens/PoisScreen';
 //   );
 // }
 
+import * as React from 'react';
+import { Button, View, Text } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import HomeScreen from './src/screens/HomeScreen';
+import PoisScreen from './src/screens/PoisScreen';
+import { Provider } from 'react-redux';
+import configureStore from './src/store/configureStore';
+
+const store = configureStore();
 const Stack = createStackNavigator();
 
 function App() {
+  // Top-level navigator
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="Points of Interest" component={PoisScreen} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <Provider store = { store }>
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="Home">
+          <Stack.Screen name="Home" component={HomeScreen} />
+          <Stack.Screen name="Points of Interest" component={PoisScreen} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </Provider>
   );
 }
 
