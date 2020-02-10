@@ -13,11 +13,11 @@ export function getPoisList() {
             const apiReq = await fetch('https://warply.s3.amazonaws.com/data/test_pois.json', {
             method: 'GET'
             });
-            console.log(apiReq);
+            console.log('fetch: '+apiReq);
             await dispatch(setPoisList(apiReq));
             return apiReq || [];
         } catch (error) {
-            console.error(error);
+            console.error('fetch error: '+error);
         }
     };
 }

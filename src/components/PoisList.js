@@ -19,9 +19,17 @@ class PoisList extends Component {
     //     );
     // }
 
+    componentDidMount() {
+        let { actions } = this.props;
+        console.log('props1: '+this.props);
+        actions.getPoisList();
+        console.log('props2: '+this.props);
+    }
+
     render() {
         const { poisList } = this.props;
-        console.log(poisList);
+        console.log('props3: '+this.props);
+        console.log('pois list: '+poisList);
         return (
           <View>
             {poisList.map((poi) => (

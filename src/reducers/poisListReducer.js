@@ -1,8 +1,6 @@
 import { GET_POIS_LIST } from '../constants/types';
 
 const initialState = {
-    isFetching: false,
-    hasPermisson: false,
     poisList: []
 };
 
