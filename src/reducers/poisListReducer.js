@@ -9,7 +9,7 @@ const poisListReducer = (state = initialState, action) => {
         case GET_POIS_LIST:
             return {
                 ...state,
-                poisList: []
+                poisList: action.payload
             };
         default:
             return state;
