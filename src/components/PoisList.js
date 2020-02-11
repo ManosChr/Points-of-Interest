@@ -20,9 +20,8 @@ class PoisList extends Component {
 
     componentDidMount() {
         let { actions } = this.props;
-        // console.log('props1: '+this.props);
+        actions.getUserLocation();
         actions.getPoisList();
-        // console.log('props2: '+this.props);
     }
 
     renderItem(poi) {
@@ -39,7 +38,11 @@ class PoisList extends Component {
     }
 
     render() {
-        const { poisList } = this.props;
+        const { poisList, userLocation } = this.props;
+
+        console.log('userLocation: ' + userLocation);
+        console.log('userLocation: ' + userLocation.location);
+        console.log('userLocation: ' + userLocation.permission);
         // console.log('props3: '+this.props);
         // console.log('props4: '+this.props.poisList);
         // console.log('pois list: '+poisList);
@@ -67,11 +70,13 @@ class PoisList extends Component {
 
 const mapStateToProps = state => ({
     poisList: state.poisList.poisList,
+    userLocation: state.userLocation.userLocation
 });
 
 const ActionCreators = Object.assign(
     {},
     poisListActions,
+    userLocationActions
 );
 
 const mapDispatchToProps = dispatch => ({

@@ -4,7 +4,10 @@ import { applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 
 const rootReducer = combineReducers(
-    { poisList: poisListReducer }
+    { 
+        poisList: poisListReducer,
+        userLocation: userLocationReducer
+    }
 );
 
 const configureStore = () => {

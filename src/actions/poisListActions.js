@@ -14,8 +14,9 @@ export function getPoisList() {
             const apiReq = await fetch('https://warply.s3.amazonaws.com/data/test_pois.json', {
             method: 'GET'
             });
-            console.log('fetch: '+apiReq.json());
-            await dispatch(setPoisList(data));
+            const resolvedApiReq = await apiReq.json();
+            await dispatch(setPoisList(resolvedApiReq));
+            // await dispatch(setPoisList(data));
             return apiReq || [];
         } catch (error) {
             console.error('fetch error: '+error);
