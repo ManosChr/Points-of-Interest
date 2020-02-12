@@ -1,4 +1,9 @@
-import { Constants, Location, Permissions } from 'expo';
+import React, { Component } from 'react';
+import { Platform, Text, View, StyleSheet } from 'react-native';
+
+import * as Location from 'expo-location';
+import * as Permissions from 'expo-permissions';
+import { GET_USER_LOCATION } from '../constants/types';
 
 export function setuserLocation(userLocation) {
     return {
@@ -14,20 +19,26 @@ export function getUserLocation() {
             location: null,
             permission: null
         };
-
+    try{
         let { status } = await Permissions.askAsync(Permissions.LOCATION);
-        console.log('status: ' + status);
-
+        
 		if (status !== 'granted') {
 			userLocation.permission = false;
 		} else {
             userLocation.permission = true;
         }
-
-		userLocation.location = await Location.getCurrentPositionAsync({});
         
+        let response = await Location.getCurrentPositionAsync({});
+        userLocation.location = response.coords;
+        // console.log('statu3s: ' + status);
+        console.log('coords: ' +  JSON.stringify(userLocation.location));
+        // console.log('permission: ' + JSON.stringify(userLocation.permission));
         await dispatch(setuserLocation(userLocation));
+        console.log('!!!!!userLocation: ' + JSON.stringify(userLocation));
         return userLocation;
+    } catch (error) {
+        console.error('get location error: '+error);
+    }
     };
     
     // return async (dispatch) => {
