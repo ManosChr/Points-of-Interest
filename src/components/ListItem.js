@@ -25,7 +25,7 @@ class ListItem extends Component {
 
     render() {
         const { textStyle, containerStyle } = styles;
-        const { address } = this.props.poi.item;
+        const { address, distance } = this.props.poi.item;
 
         return (
             // <TouchableWithoutFeedback
@@ -33,7 +33,7 @@ class ListItem extends Component {
             // >
                 <View style={containerStyle}>
                     <Text style={textStyle}>
-                        {address}
+                        {address} - {distance} km
                     </Text>
                 </View>
             // </TouchableWithoutFeedback>

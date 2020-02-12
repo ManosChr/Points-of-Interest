@@ -46,9 +46,7 @@ const calculateLinearDistance = (latA, lonA, latB, lonB) => {
     /**
      * Compares two distances from a fixed point and returns shorter (a-b)
      */
-    const distanceFromDiviceComparator = (a, b) =>
-      distanceFromDivice(Number(a.latitude), Number(a.longitude)) -
-      distanceFromDivice(Number(b.latitude), Number(b.longitude));
+    const distanceFromDiviceComparator = (a, b) => a.distance - b.distance;
   
     /**
      * Compares alphabetically the address of POI (using localeCompare)
@@ -56,18 +54,21 @@ const calculateLinearDistance = (latA, lonA, latB, lonB) => {
     const localeAlphabeticallyComparator = (a, b) =>
       ("" + a.address).localeCompare(b.address);
   
-    const updatedAndSortedArray = DATA.sort(
-      DIVICE_LOCATION_ENABLED
-        ? distanceFromDiviceComparator
-        : localeAlphabeticallyComparator
-    );
+    const updatedAndSortedArray = DATA
+      .map(e => {
+        return {
+          ...e,
+          distance: distanceFromDivice(Number(e.latitude), Number(e.longitude))
+        };
+      })
+      .sort(
+        DIVICE_LOCATION_ENABLED
+          ? distanceFromDiviceComparator
+          : localeAlphabeticallyComparator
+      );
   
-    console.log(distanceFromDiviceComparator);
-    return ({
-        updatedAndSortedArray,
-        distanceFromDiviceComparator
-    });
-} 
+    return updatedAndSortedArray;
+}
 
 class PoisList extends Component {
 
@@ -102,17 +103,23 @@ class PoisList extends Component {
 
     render() {
         const { poisList, userLocation } = this.props;
-        const { latitude, longitude } = userLocation.location;
+        
         const { permission } = userLocation;
-
+        let sortedPoisList = null;
         // console.log('***userLocation: ' + JSON.stringify(userLocation.permission));
-        console.log('***userLocation: ' + JSON.stringify(latitude));
-        console.log('***userLocation: ' + JSON.stringify(longitude));
-        console.log('***userLocation: ' + JSON.stringify(permission));
-
-
-        const sortedPoisList = getSortedData(latitude, longitude, poisList, permission);
-
+        // console.log('***userLocation: ' + JSON.stringify(latitude));
+        // console.log('***userLocation: ' + JSON.stringify(longitude));
+        // console.log('***userLocation: ' + JSON.stringify(permission));
+        if( permission ) {
+            console.log('true!!!');
+            const { latitude, longitude } = userLocation.location;
+            console.log('***userLocation: ' + JSON.stringify(latitude));
+            console.log('***userLocation: ' + JSON.stringify(longitude));
+             sortedPoisList = getSortedData(latitude, longitude, poisList, permission);
+        } else {
+            console.log('false!!!');
+             sortedPoisList = getSortedData(0, 0, poisList, permission);
+        }
         // console.log('***sortedPoisList: ' + JSON.stringify(sortedPoisList));
         // console.log('***updatedAndSortedArray: ' + JSON.stringify(sortedPoisList.updatedAndSortedArray));
         // console.log('***distanceFromDiviceComparator: ' + JSON.stringify(sortedPoisList.distanceFromDiviceComparator));
@@ -129,7 +136,7 @@ class PoisList extends Component {
             // ))}
     
         <FlatList 
-            data={sortedPoisList.updatedAndSortedArray}
+            data={sortedPoisList}
             renderItem={this.renderItem}
             keyExtractor={(poi => poi.id)}
         />
