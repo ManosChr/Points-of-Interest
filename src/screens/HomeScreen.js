@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
-import { Button } from './../components/common';
+import Button from './../components/Button';
 
 export default function HomeScreen({ navigation }) {
   return (

@@ -1,5 +1,4 @@
 import { GET_POIS_LIST } from '../constants/types';
-import data from './test_pois.json';
 
 export function setPoisList(poisList) {
     return {
@@ -8,6 +7,7 @@ export function setPoisList(poisList) {
     };
 }
 
+// Fetches pois list from the api and dispatches an action to the reducer with the api response
 export function getPoisList() {
     return async (dispatch) => {
         try {
@@ -16,7 +16,6 @@ export function getPoisList() {
             });
             const resolvedApiReq = await apiReq.json();
             await dispatch(setPoisList(resolvedApiReq));
-            // await dispatch(setPoisList(data));
             return apiReq || [];
         } catch (error) {
             console.error('fetch error: '+error);

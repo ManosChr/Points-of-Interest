@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { FlatList, Button, View, Text } from 'react-native';
+import { FlatList } from 'react-native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as poisListActions from '../actions/poisListActions';
@@ -70,85 +70,51 @@ const calculateLinearDistance = (latA, lonA, latB, lonB) => {
     return updatedAndSortedArray;
 }
 
+// Pois List Component
 class PoisList extends Component {
 
     componentDidMount() {
         let { actions } = this.props;
         
+        // Check if the app runs on device, if yes calls user location action
+        // call pois list action
         if (Platform.OS === 'android' && !Constants.isDevice) {
             console.log('Oops, this will not work on Sketch in an Android emulator. Try it on your device!');
         } else {
             actions.getUserLocation();
         }
-        // console.log('11coords: ' + userLocation.location);
-        // console.log('11permission: ' + userLocation.permission);
-        // console.log('22userLocation: ' + JSON.stringify(userLocation.location.longitude));
-        // console.log('22userLocation: ' + JSON.stringify(userLocation.location.latitude));
-
         actions.getPoisList();
     }
 
+    // render list item
     renderItem(poi) {
         return <ListItem poi={poi} />;
-        // console.log(poi);
-        // console.log(poi.item.address);
-        // return (
-        //     <View>
-        //         <Text>
-        //             {poi.item.address}
-        //         </Text>
-        //     </View>
-        // );
     }
 
+    // Get poislist and user location from the store. If we have locatio permission from the user we sort poislist by distance else we sort poislist alphabetically. Then we render the sorted pois list
     render() {
         const { poisList, userLocation } = this.props;
         
         const { permission } = userLocation;
         let sortedPoisList = null;
-        // console.log('***userLocation: ' + JSON.stringify(userLocation.permission));
-        // console.log('***userLocation: ' + JSON.stringify(latitude));
-        // console.log('***userLocation: ' + JSON.stringify(longitude));
-        // console.log('***userLocation: ' + JSON.stringify(permission));
+
         if( permission ) {
-            console.log('true!!!');
             const { latitude, longitude } = userLocation.location;
-            // console.log('***userLocation: ' + JSON.stringify(latitude));
-            // console.log('***userLocation: ' + JSON.stringify(longitude));
-             sortedPoisList = getSortedData(latitude, longitude, poisList, permission);
+
+            sortedPoisList = getSortedData(latitude, longitude, poisList, permission);
         } else {
-            console.log('false!!!');
              sortedPoisList = getSortedData(0, 0, poisList, permission);
         }
-        // console.log('***sortedPoisList: ' + JSON.stringify(sortedPoisList));
-        // console.log('***updatedAndSortedArray: ' + JSON.stringify(sortedPoisList.updatedAndSortedArray));
-        // console.log('***distanceFromDiviceComparator: ' + JSON.stringify(sortedPoisList.distanceFromDiviceComparator));
-        
-        // console.log('22userLocation: ' + JSON.stringify(userLocation));
-        // console.log('22poisList: ' + JSON.stringify(poisList));
-        // console.log('22coords: ' + JSON.stringify(userLocation.location));
-        // console.log('22permission: ' + JSON.stringify(userLocation.permission));
-        
-        return (
-        //   <View>
-            // {poisList.map((poi) => (
-            //   <Text>{poi.address}</Text>
-            // ))}
-    
-        <FlatList 
-            data={sortedPoisList}
-            renderItem={this.renderItem}
-            keyExtractor={(poi => poi.id)}
-        />
-    
-        //   </View>
-        );
-      }
-}
 
-// const mapStateToProps = state => {
-//     return { libraries: state.libraries };
-// };
+        return (
+          <FlatList 
+              data={sortedPoisList}
+              renderItem={this.renderItem}
+              keyExtractor={(poi => poi.id)}
+          />
+        );
+    }
+}
 
 const mapStateToProps = state => ({
     poisList: state.poisList.poisList,

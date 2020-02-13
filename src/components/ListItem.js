@@ -1,42 +1,18 @@
 import React, { Component } from 'react';
-import { Text, TouchableWithoutFeedback, View, LayoutAnimation } from 'react-native';
-import { connect } from 'react-redux';
-import { CardSection } from './common';
-// import * as actions from '../actions';
+import { Text, View } from 'react-native';
 
+// Listitem Component - Renders each poi
 class ListItem extends Component {
-    // componentWillUpdate() {
-    //     LayoutAnimation.spring();
-    // }
-
-    // renderDescription() {
-    //     const { library, expanded } = this.props;
-
-    //     if (expanded) {
-    //         return (
-    //             <CardSection>
-    //                 <Text style={{ flex: 1 }}>
-    //                     {library.item.description}
-    //                 </Text>
-    //             </CardSection>
-    //         );
-    //     }
-    // }
-
     render() {
         const { textStyle, containerStyle } = styles;
         const { address, distance } = this.props.poi.item;
 
         return (
-            // <TouchableWithoutFeedback
-            //     onPress={() => this.props.selectLibrary(id)}
-            // >
-                <View style={containerStyle}>
-                    <Text style={textStyle}>
-                        {address} - {distance} km
-                    </Text>
-                </View>
-            // </TouchableWithoutFeedback>
+            <View style={containerStyle}>
+                <Text style={textStyle}>
+                    {address} - {distance.toFixed(2)} km
+                </Text>
+            </View>
         );
     }
 }
@@ -56,13 +32,5 @@ const styles = {
         position: 'relative'
       }
 };
-
-// const mapStateToProps = (state, ownProps) => {
-//     const expanded = state.selectedLibraryId === ownProps.library.item.id;
-
-//     return { expanded };
-// };
-
-// export default connect(mapStateToProps, actions)(ListItem);
 
 export default ListItem;

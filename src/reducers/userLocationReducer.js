@@ -4,6 +4,8 @@ const initialState = {
     userLocation: {}
 };
 
+// User location reducer
+// gets an action an returns user locatio to the store
 const userLocationReducer = (state = initialState, action) => {
     switch(action.type) {
         case GET_USER_LOCATION:
