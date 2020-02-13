@@ -113,8 +113,8 @@ class PoisList extends Component {
         if( permission ) {
             console.log('true!!!');
             const { latitude, longitude } = userLocation.location;
-            console.log('***userLocation: ' + JSON.stringify(latitude));
-            console.log('***userLocation: ' + JSON.stringify(longitude));
+            // console.log('***userLocation: ' + JSON.stringify(latitude));
+            // console.log('***userLocation: ' + JSON.stringify(longitude));
              sortedPoisList = getSortedData(latitude, longitude, poisList, permission);
         } else {
             console.log('false!!!');

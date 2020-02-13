@@ -14,8 +14,8 @@ import { Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import PoisList from './PoisListScreen';
-import PoisMap from './PoisMapScreen';
+import PoisList from '../components/PoisList';
+import PoisMap from '../components/PoisMap';
 
 
 const Tab = createBottomTabNavigator();

@@ -31,10 +31,10 @@ export function getUserLocation() {
         let response = await Location.getCurrentPositionAsync({});
         userLocation.location = response.coords;
         // console.log('statu3s: ' + status);
-        console.log('coords: ' +  JSON.stringify(userLocation.location));
+        // console.log('coords: ' +  JSON.stringify(userLocation.location));
         // console.log('permission: ' + JSON.stringify(userLocation.permission));
         await dispatch(setuserLocation(userLocation));
-        console.log('!!!!!userLocation: ' + JSON.stringify(userLocation));
+        // console.log('!!!!!userLocation: ' + JSON.stringify(userLocation));
         return userLocation;
     } catch (error) {
         console.error('get location error: '+error);
